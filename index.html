@@ -7,41 +7,39 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
     
     <style>
         /* Глобальные настройки стилей - ТРУ-БРУТАЛИЗМ DARK MODE */
         :root {
-            /* Инвертируем цвета для черного фона */
             --bg-color: #000000;
             --text-color: #FFFFFF;
-            --accent-color: #FFFFFF; /* Рамки и заливка кнопок теперь белые */
+            --accent-color: #FFFFFF; 
             --border-width: 2px;
-            /* Шрифты сохраняем */
-            --font-serif: 'Playfair Display', serif;
-            --font-sans: 'Roboto', sans-serif;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
         }
 
         body {
             font-family: var(--font-sans);
-            background-color: var(--bg-color); /* Абсолютно черный фон */
-            color: var(--text-color); /* Белый текст */
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
             padding: 15px;
             margin: 0;
-            padding-bottom: 130px; /* Отступ под нижнюю панель */
+            padding-bottom: 130px; 
             overflow-x: hidden;
             
-            /* Эффект зернистости (Gritty Noise pattern) - оставляем для текстуры */
+            /* Эффект зернистости */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3P%3Cfilter id='noiseFilter'%3P%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3P%3C/filter%3P%3Crect width='100%' height='100%' filter='url(%23noiseFilter)'/%3P%3C/svg%3P");
             opacity: 0.98;
         }
 
-        /* Заголовки - ЧБ контраст */
         h2 { 
             font-family: var(--font-serif);
-            font-weight: 800;
+            font-size: 32px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             text-align: center; 
             margin-bottom: 30px; 
             margin-top: 10px;
@@ -58,35 +56,32 @@
 
         .hidden { display: none !important; }
 
-        /* Элегантная типографика для служебных кнопок */
         .support-btn, .btn, .btn-green, .btn-outline {
             font-family: var(--font-serif) !important;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.7px;
+            letter-spacing: 1px;
         }
 
-        /* Кнопка поддержки - черно-белая, контрастная */
         .support-btn {
             position: absolute; top: 15px; right: 15px;
-            background-color: transparent; /* Прозрачный фон на черном */
-            color: var(--text-color); /* Белый текст */
-            border: var(--border-width) solid var(--accent-color); /* Белая рамка */
-            padding: 8px 15px;
-            border-radius: 0; /* Острые углы */
-            font-size: 11px; cursor: pointer;
+            background-color: transparent; 
+            color: var(--text-color); 
+            border: var(--border-width) solid var(--accent-color); 
+            padding: 6px 12px;
+            border-radius: 0; 
+            font-size: 14px; cursor: pointer;
             transition: all 0.2s ease;
             z-index: 10;
         }
         .support-btn:active {
-            background-color: var(--accent-color); /* Белый фон при клике */
-            color: var(--bg-color); /* Черный текст при клике */
+            background-color: var(--accent-color); 
+            color: var(--bg-color); 
         }
 
-        /* Карточка товара - минимализм, высокий контраст на черном */
         .product-card {
-            background-color: var(--bg-color); /* Черный фон карточки */
-            border: var(--border-width) solid var(--accent-color); /* Белая рамка */
+            background-color: var(--bg-color); 
+            border: var(--border-width) solid var(--accent-color); 
             border-radius: 0; 
             padding: 20px; 
             margin-bottom: 30px;
@@ -98,16 +93,15 @@
             width: 100%; 
             max-width: 250px; 
             height: auto;
-            border: var(--border-width) solid var(--accent-color); /* Белая рамка фото */
+            border: var(--border-width) solid var(--accent-color); 
             border-radius: 0;
-            filter: none; /* УБРАЛИ ГРЕЙСКЕЙЛ - ФОТО В ЦВЕТЕ */
             margin-bottom: 15px;
-            background-color: #FFFFFF; /* Белый фон для ЧБ фото если они на прозрачном фоне */
+            background-color: #FFFFFF; 
         }
 
         .product-title { 
             font-family: var(--font-serif);
-            font-size: 21px; 
+            font-size: 24px; 
             font-weight: 700; 
             margin: 0 0 10px 0; 
             text-transform: uppercase;
@@ -115,7 +109,7 @@
         }
 
         .product-desc { 
-            font-size: 13px; 
+            font-size: 12px; 
             font-weight: 300;
             line-height: 1.5;
             margin-bottom: 15px; 
@@ -132,13 +126,12 @@
             color: var(--text-color);
         }
         
-        /* Селектор размера - прямоугольный на черном */
         .size-selector {
             padding: 12px; 
             border-radius: 0;
-            border: var(--border-width) solid var(--accent-color); /* Белая рамка */
-            background: transparent; /* Прозрачный фон */
-            color: var(--text-color); /* Белый текст */
+            border: var(--border-width) solid var(--accent-color); 
+            background: transparent; 
+            color: var(--text-color); 
             width: 100%; 
             max-width: 230px; 
             margin-bottom: 15px;
@@ -149,18 +142,17 @@
             cursor: pointer;
         }
         .size-selector option {
-            background-color: var(--bg-color); /* Черный фон опций */
-            color: var(--text-color); /* Белый текст опций */
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
         }
 
-        /* Кнопки - Брутализм, контраст на черном (теперь белые кнопки с черным текстом) */
         .btn {
-            background-color: var(--accent-color); /* Белый фон */
-            color: var(--bg-color); /* Черный текст */
-            border: var(--border-width) solid var(--accent-color); /* Белая рамка */
-            padding: 12px 25px; 
+            background-color: var(--accent-color); 
+            color: var(--bg-color); 
+            border: var(--border-width) solid var(--accent-color); 
+            padding: 10px 20px; 
             border-radius: 0;
-            font-size: 14px; 
+            font-size: 16px; 
             cursor: pointer; 
             width: 100%; 
             max-width: 230px;
@@ -168,23 +160,19 @@
         }
         
         .btn:active {
-            background-color: transparent; /* Прозрачный при клике */
-            color: var(--text-color); /* Белый текст при клике */
+            background-color: transparent; 
+            color: var(--text-color); 
         }
         
-        /* Главные кнопки (теперь белые с черным текстом) */
         .btn-green { 
-            background-color: var(--accent-color); /* Белый фон */
-            color: var(--bg-color); /* Черный текст */
+            background-color: var(--accent-color); 
+            color: var(--bg-color); 
             border: var(--border-width) solid var(--accent-color);
             width: 100%; 
             max-width: none; 
-            font-size: 17px; 
+            font-size: 18px; 
             padding: 15px;
-            text-transform: uppercase;
             font-family: var(--font-serif);
-            font-weight: 700;
-            letter-spacing: 1.2px;
         }
         .btn-green:active {
             background-color: transparent;
@@ -193,8 +181,8 @@
 
         .btn-outline { 
             background-color: transparent; 
-            border: var(--border-width) solid var(--accent-color); /* Белая рамка */
-            color: var(--text-color); /* Белый текст */
+            border: var(--border-width) solid var(--accent-color); 
+            color: var(--text-color); 
             margin-bottom: 15px; 
             width: 100%; 
             padding: 15px;
@@ -205,11 +193,10 @@
             color: var(--bg-color);
         }
 
-        /* Нижняя панель - ЧБ, контрастная */
         .cart-panel {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background-color: var(--bg-color); /* Черный фон панели */
-            border-top: var(--border-width) solid var(--accent-color); /* Белая рамка сверху */
+            background-color: var(--bg-color); 
+            border-top: var(--border-width) solid var(--accent-color); 
             padding: 20px;
             display: flex; justify-content: space-between; align-items: center;
             z-index: 100;
@@ -226,12 +213,11 @@
             color: var(--text-color);
         }
 
-        /* Список в корзине - ЧБ */
         #cart-items-list {
             border-top: var(--border-width) solid var(--accent-color);
         }
         .cart-item {
-            border-bottom: 1px solid #444444; /* Темно-серая разделительная линия */
+            border-bottom: 1px solid #444444; 
             padding: 15px 0;
             display: flex; justify-content: space-between; align-items: center;
             font-family: var(--font-sans);
@@ -245,10 +231,10 @@
             font-weight: 700;
         }
         .cart-item-remove { 
-            color: var(--text-color); /* Белый текст */
+            color: var(--text-color); 
             cursor: pointer; 
-            font-size: 11px; 
-            border: 1px solid var(--accent-color); /* Белая рамка */
+            font-size: 12px; 
+            border: 1px solid var(--accent-color); 
             padding: 6px 12px; 
             border-radius: 0;
             text-transform: uppercase;
@@ -259,10 +245,9 @@
             color: var(--bg-color);
         }
 
-        /* Экран оплаты - ЧБ на черном */
         .payment-box {
             background-color: var(--bg-color);
-            border: var(--border-width) solid var(--accent-color); /* Белая рамка */
+            border: var(--border-width) solid var(--accent-color); 
             padding: 30px 20px; 
             border-radius: 0; 
             text-align: center; 
@@ -278,8 +263,8 @@
             font-weight: 700; 
             letter-spacing: 2px; 
             margin: 20px 0; 
-            background-color: #FFFFFF; /* Белый фон для номера */
-            color: #000000; /* Черный текст номера */
+            background-color: #FFFFFF; 
+            color: #000000; 
             padding: 12px;
             display: inline-block;
         }
@@ -289,35 +274,275 @@
 <body>
 
     <div id="catalog-page">
-        <button class="support-btn" onclick="tg.openTelegramLink('https://t.me/demhost')">SUPPORT</button>
-        <h2>Catalog</h2>
+        <button class="support-btn" onclick="tg.openTelegramLink('https://t.me/demhost')">ПОДДЕРЖКА</button>
+        <h2>Каталог</h2>
 
         <div class="product-card">
             <img src="bratva2.png" alt="Братва 2" class="product-img">
-            <div class="product-title">T-Shirt «Братва 2»</div>
-            <div class="product-desc">Только ручная стирка при 30°C. 100% Хлопок.</div>
+            <div class="product-title">Футболка «Братва 2»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
             <span class="product-price">1 250 ₽</span>
             <select id="size-1" class="size-selector">
                 <option value="XS">Размер: XS</option><option value="S">Размер: S</option><option value="M" selected>Размер: M</option><option value="L">Размер: L</option><option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
             </select><br>
-            <button class="btn" onclick="addToCart('Футболка «Братва 2»', 1250, 'size-1')">Add to Cart</button>
+            <button class="btn" onclick="addToCart('Футболка «Братва 2»', 1250, 'size-1')">В корзину</button>
         </div>
 
         <div class="product-card">
             <img src="bratva1.png" alt="Братва 1" class="product-img">
-            <div class="product-title">T-Shirt «Братва 1»</div>
-            <div class="product-desc">Только ручная стирка при 30°C. 100% Хлопок.</div>
+            <div class="product-title">Футболка «Братва 1»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
             <span class="product-price">1 250 ₽</span>
             <select id="size-2" class="size-selector">
                 <option value="XS">Размер: XS</option><option value="S">Размер: S</option><option value="M" selected>Размер: M</option><option value="L">Размер: L</option><option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
             </select><br>
-            <button class="btn" onclick="addToCart('Футболка «Братва 1»', 1250, 'size-2')">Add to Cart</button>
+            <button class="btn" onclick="addToCart('Футболка «Братва 1»', 1250, 'size-2')">В корзину</button>
         </div>
 
         <div class="product-card">
             <img src="bratva1_5.png" alt="Братва 1,5" class="product-img">
-            <div class="product-title">T-Shirt «Братва 1.5»</div>
-            <div class="product-desc">Только ручная стирка при 30°C. 100% Хлопок.</div>
+            <div class="product-title">Футболка «Братва 1,5»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
             <span class="product-price">1 250 ₽</span>
             <select id="size-3" class="size-selector">
-                <option value="XS">Размер: XS</option>
+                <option value="XS">Размер: XS</option><option value="S">Размер: S</option><option value="M" selected>Размер: M</option><option value="L">Размер: L</option><option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «Братва 1,5»', 1250, 'size-3')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="tie.png" alt="Галстук" class="product-img">
+            <div class="product-title">Галстук</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <span class="product-price">1 190 ₽</span>
+            <select id="size-4" class="size-selector">
+                <option value="Единый">Единый размер</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Галстук', 1190, 'size-4')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="na_dvoih.png" alt="На двоих" class="product-img">
+            <div class="product-title">Футболка «На двоих»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <span class="product-price">1 250 ₽</span>
+            <select id="size-5" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="S">Размер: S</option><option value="M" selected>Размер: M</option><option value="L">Размер: L</option><option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «На двоих»', 1250, 'size-5')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="v_lesu_rodilsya.png" alt="В лесу родился" class="product-img">
+            <div class="product-title">Футболка «В лесу родился»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <span class="product-price">1 250 ₽</span>
+            <select id="size-6" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="S">Размер: S</option><option value="M" selected>Размер: M</option><option value="L">Размер: L</option><option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «В лесу родился»', 1250, 'size-6')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="deadass.png" alt="deadass" class="product-img">
+            <div class="product-title">Футболка «deadass»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <span class="product-price">1 250 ₽</span>
+            <select id="size-7" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="S">Размер: S</option><option value="M" selected>Размер: M</option><option value="L">Размер: L</option><option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «deadass»', 1250, 'size-7')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="vermis.png" alt="vermis" class="product-img">
+            <div class="product-title">Футболка «vermis»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <span class="product-price">1 250 ₽</span>
+            <select id="size-8" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="S">Размер: S</option><option value="M" selected>Размер: M</option><option value="L">Размер: L</option><option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «vermis»', 1250, 'size-8')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="watching_over.png" alt="watching over" class="product-img">
+            <div class="product-title">Футболка «watching over»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <span class="product-price">1 250 ₽</span>
+            <select id="size-9" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="S">Размер: S</option><option value="M" selected>Размер: M</option><option value="L">Размер: L</option><option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «watching over»', 1250, 'size-9')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="outside.png" alt="outside" class="product-img">
+            <div class="product-title">Футболка «outside»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <span class="product-price">1 250 ₽</span>
+            <select id="size-10" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="S">Размер: S</option><option value="M" selected>Размер: M</option><option value="L">Размер: L</option><option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «outside»', 1250, 'size-10')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="question_mark.png" alt="?" class="product-img">
+            <div class="product-title">Футболка «?»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <span class="product-price">1 250 ₽</span>
+            <select id="size-11" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="S">Размер: S</option><option value="M" selected>Размер: M</option><option value="L">Размер: L</option><option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «?»', 1250, 'size-11')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="friends.png" alt="friends" class="product-img">
+            <div class="product-title">Футболка «friends»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <span class="product-price">1 250 ₽</span>
+            <select id="size-12" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="S">Размер: S</option><option value="M" selected>Размер: M</option><option value="L">Размер: L</option><option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «friends»', 1250, 'size-12')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="society.png" alt="society" class="product-img">
+            <div class="product-title">Футболка «society»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <span class="product-price">1 250 ₽</span>
+            <select id="size-13" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="S">Размер: S</option><option value="M" selected>Размер: M</option><option value="L">Размер: L</option><option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «society»', 1250, 'size-13')">В корзину</button>
+        </div>
+
+        <div class="cart-panel">
+            <div class="cart-panel-info">Товаров: <span id="cart-count">0</span><br><b class="cart-panel-total"><span id="cart-total">0</span> ₽</b></div>
+            <button class="btn-green" style="width: auto; padding: 15px 25px;" onclick="openCart()">КОРЗИНА 🛒</button>
+        </div>
+    </div>
+
+    <div id="cart-page" class="hidden">
+        <h2>Ваш заказ</h2>
+        <div id="cart-items-list" style="margin-bottom: 30px;">
+            </div>
+        <h3 style="text-align: right; letter-spacing: 1.2px; text-transform: uppercase;">Итого: <span id="cart-final-total">0</span> ₽</h3>
+        
+        <button class="btn-outline" onclick="closeCart()">← К покупкам</button>
+        <button class="btn-green" onclick="openPayment()">Оформить заказ</button>
+    </div>
+
+    <div id="payment-page" class="hidden">
+        <h2>Оплата</h2>
+        <p style="text-align: center; font-weight: 500; font-size: 15px;">Переведите <b><span id="pay-total">0</span> ₽</b> по реквизитам ниже.</p>
+        
+        <div class="payment-box">
+            <p style="font-family: var(--font-sans); font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Банк</p>
+            <p style="margin-top: 0; font-weight: 700; font-size: 16px;">Тинькофф / Сбербанк</p>
+            <div class="card-number" id="my-card">0000 0000 0000 0000</div> 
+            <button class="btn" style="font-size: 14px; padding: 10px; width: auto; max-width: none;" onclick="copyCard()">📋 Скопировать</button>
+        </div>
+
+        <br><br>
+        <button class="btn-green" onclick="finishOrder()">✅ Я оплатил</button>
+        <button class="btn-outline" onclick="backToCart()" style="margin-top: 10px;">← Назад</button>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.setHeaderColor('#000000');
+        tg.setBackgroundColor('#000000');
+
+        let cart = []; 
+
+        function addToCart(name, price, sizeSelectId) {
+            let selectedSize = document.getElementById(sizeSelectId).value;
+            cart.push({ name: name, price: price, size: selectedSize });
+            updateCartUI();
+            tg.showAlert(`ДОБАВЛЕНО: ${name} (${selectedSize})`);
+        }
+
+        function updateCartUI() {
+            let total = cart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('cart-total').innerText = total;
+            document.getElementById('cart-final-total').innerText = total;
+            document.getElementById('pay-total').innerText = total;
+        }
+
+        function removeCartItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+            renderCartItems();
+            if(cart.length === 0) closeCart();
+        }
+
+        function openCart() {
+            if (cart.length === 0) return tg.showAlert("Корзина пуста!");
+            document.getElementById('catalog-page').classList.add('hidden');
+            document.getElementById('cart-page').classList.remove('hidden');
+            window.scrollTo(0, 0);
+            renderCartItems();
+        }
+
+        function closeCart() {
+            document.getElementById('cart-page').classList.add('hidden');
+            document.getElementById('catalog-page').classList.remove('hidden');
+        }
+
+        function openPayment() {
+            document.getElementById('cart-page').classList.add('hidden');
+            document.getElementById('payment-page').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function backToCart() {
+            document.getElementById('payment-page').classList.add('hidden');
+            document.getElementById('cart-page').classList.remove('hidden');
+        }
+
+        function renderCartItems() {
+            let html = '';
+            cart.forEach((item, index) => {
+                html += `<div class="cart-item">
+                            <div class="cart-item-info"><b style="font-family:var(--font-serif); text-transform:uppercase;">${item.name}</b><br>Размер: ${item.size}</div>
+                            <div class="cart-item-price">${item.price} ₽</div>
+                            <div class="cart-item-remove" onclick="removeCartItem(${index})">✕ Убрать</div>
+                         </div>`;
+            });
+            document.getElementById('cart-items-list').innerHTML = html;
+        }
+
+        function copyCard() {
+            let cardNumber = document.getElementById('my-card').innerText;
+            let pureNumber = cardNumber.replace(/\s/g, '');
+            navigator.clipboard.writeText(pureNumber).then(() => {
+                tg.showAlert("Номер карты скопирован!");
+            }).catch(err => {
+                tg.showAlert("Ошибка копирования. Скопируйте номер вручную.");
+            });
+        }
+
+        function finishOrder() {
+            tg.showAlert("ОТЛИЧНО! Пожалуйста, отправьте скриншот оплаты нашему менеджеру.");
+            
+            let orderText = "🛒 НОВЫЙ ЗАКАЗ И ОПЛАТА:\n\n";
+            let total = 0;
+            cart.forEach((item, index) => {
+                orderText += `${index + 1}. ${item.name} (${item.size}) — ${item.price}₽\n`;
+                total += item.price;
+            });
+            orderText += `\n💰 ИТОГО К ОПЛАТЕ: ${total}₽\n✅ Клиент нажал «Я оплатил»`;
+
+            setTimeout(() => {
+                tg.sendData(orderText);
+            }, 1500); 
+        }
+    </script>
+</body>
+</html>
