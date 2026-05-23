@@ -3,60 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEMclo</title>
+    <title>Deus Ex Machina Shop</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--tg-theme-bg-color, #ffffff);
             color: var(--tg-theme-text-color, #000000);
-            padding: 20px;
-        }
-        .product {
-            border: 1px solid #ccc;
-            border-radius: 10px;
             padding: 15px;
-            margin-bottom: 15px;
-            text-align: center;
+            margin: 0;
+            padding-bottom: 100px;
         }
-        button {
-            background-color: var(--tg-theme-button-color, #3390ec);
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .product-card {
+            background-color: var(--tg-theme-secondary-bg-color, #f4f4f5);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .product-img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+            background-color: #e1e1e1;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0 5px 0;
+        }
+
+        .product-desc {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--tg-theme-link-color, #2481cc);
+            margin-bottom: 12px;
+        }
+
+        .size-selector {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background: var(--tg-theme-bg-color, #fff);
+            color: var(--tg-theme-text-color, #000);
+            width: 80%;
+            max-width: 200px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .add-btn {
+            background-color: var(--tg-theme-button-color, #2481cc);
             color: var(--tg-theme-button-text-color, #ffffff);
             border: none;
             padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 80%;
+            max-width: 200px;
+            transition: opacity 0.2s;
+        }
+        .add-btn:active {
+            opacity: 0.7;
+        }
+
+        .cart-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            border-top: 1px solid rgba(0,0,0,0.1);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+        }
+
+        .cart-info {
+            font-size: 15px;
+        }
+
+        .order-btn {
+            background-color: #31b545;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <h2>Наличие</h2>
+    <h2>Каталог</h2>
 
-    <div class="product">
-        <h3>футба1</h3>
-        <p>хорошая</p>
-        <p><b>3 500 ₽</b></p>
-        <button onclick="buy('Худи Этерия')">Добавить в корзину</button>
+    <div class="product-card">
+        <img src="bratva2.png" alt="Братва 2" class="product-img">
+        <div class="product-title">Футболка «Братва 2»</div>
+        <div class="product-price">1 250 ₽</div>
+        <select id="size-1" class="size-selector">
+            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
+            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
+            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+        </select><br>
+        <button class="add-btn" onclick="addToCart('Футболка «Братва 2»', 1250, 'size-1')">В корзину</button>
     </div>
 
-    <div class="product">
-        <h3>футба2</h3>
-        <p>пиздатая</p>
-        <p><b>3 200 ₽</b></p>
-        <button onclick="buy('Свитшот Феррум')">Добавить в корзину</button>
+    <div class="product-card">
+        <img src="bratva1.png" alt="Братва 1" class="product-img">
+        <div class="product-title">Футболка «Братва 1»</div>
+        <div class="product-price">1 250 ₽</div>
+        <select id="size-2" class="size-selector">
+            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
+            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
+            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+        </select><br>
+        <button class="add-btn" onclick="addToCart('Футболка «Братва 1»', 1250, 'size-2')">В корзину</button>
+    </div>
+
+    <div class="product-card">
+        <img src="bratva1_5.png" alt="Братва 1,5" class="product-img">
+        <div class="product-title">Футболка «Братва 1,5»</div>
+        <div class="product-price">1 250 ₽</div>
+        <select id="size-3" class="size-selector">
+            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
+            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
+            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+        </select><br>
+        <button class="add-btn" onclick="addToCart('Футболка «Братва 1,5»', 1250, 'size-3')">В корзину</button>
+    </div>
+
+    <div class="product-card">
+        <img src="tie.png" alt="Галстук" class="product-img">
+        <div class="product-title">Галстук</div>
+        <div class="product-price">1 190 ₽</div>
+        <select id="size-4" class="size-selector">
+            <option value="Единый">Единый размер</option>
+        </select><br>
+        <button class="add-btn" onclick="addToCart('Галстук', 1190, 'size-4')">В корзину</button>
+    </div>
+
+    <div class="product-card">
+        <img src="na_dvoih.png" alt="На двоих" class="product-img">
+        <div class="product-title">Футболка «На двоих»</div>
+        <div class="product-desc">Только ручная стирка.</div>
+        <div class="product-price">1 250 ₽</div>
+        <select id="size-5" class="size-selector">
+            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
+            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
+            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+        </select><br>
+        <button class="add-btn" onclick="addToCart('Футболка «На двоих»', 1250, 'size-5')">В корзину</button>
+    </div>
+
+    <div class="product-card">
+        <img src="v_lesu_rodilsya.png" alt="В лесу родился" class="product-img">
+        <div class="product-title">Футболка «В лесу родился, пню молился»</div>
+        <div class="product-desc">Только ручная стирка.</div>
+        <div class="product-price">1 250 ₽</div>
+        <select id="size-6" class="size-selector">
+            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
+            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
+            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+        </select><br>
+        <button class="add-btn" onclick="addToCart('Футболка «В лесу родился...»', 1250, 'size-6')">В корзину</button>
+    </div>
+
+    <div class="product-card">
+        <img src="deadass.png" alt="deadass" class="product-img">
+        <div class="product-title">Футболка «deadass»</div>
+        <div class="product-desc">Только ручная стирка.</div>
+        <div class="product-price">1 250 ₽</div>
+        <select id="size-7" class="size-selector">
+            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
+            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
+            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+        </select><br>
+        <button class="add-btn" onclick="addToCart('Футболка «deadass»', 1250, 'size-7')">В корзину</button>
+    </div>
+
+    <div class="product-card">
+        <img src="vermis.png" alt="vermis" class="product-img">
+        <div class="product-title">Футболка «vermis»</div>
+        <div class="product-desc">Только ручная стирка.</div>
+        <div class="product-price">1 250 ₽</div>
+        <select id="size-8" class="size-selector">
+            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
+            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
+            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+        </select><br>
+        <button class="add-btn" onclick="addToCart('Футболка «vermis»', 1250, 'size-8')">В корзину</button>
+    </div>
+
+    <div class="product-card">
+        <img src="watching_over.png" alt="watching over" class="product-img">
+        <div class="product-title">Футболка «watching over»</div>
+        <div class="product-desc">Только ручная стирка.</div>
+        <div class="product-price">1 250 ₽</div>
+        <select id="size-9" class="size-selector">
+            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
+            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
+            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+        </select><br>
+        <button class="add-btn" onclick="addToCart('Футболка «watching over»', 1250, 'size-9')">В корзину</button>
+    </div>
+
+    <div class="product-card">
+        <img src="outside.png" alt="outside" class="product-img">
+        <div class="product-title">Футболка «outside»</div>
+        <div class="product-desc">Только ручная стирка.</div>
+        <div class="product-price">1 250 ₽</div>
+        <select id="size-10" class="size-selector">
+            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
+            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
+            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+        </select><br>
+        <button class="add-btn" onclick="addToCart('Футболка «outside»', 1250, 'size-10')">В корзину</button>
+    </div>
+
+    <div class="product-card">
+        <img src="question_mark.png" alt="?" class="product-img">
+        <div class="product-title">Футболка «?»</div>
+        <div class="product-price">1 250 ₽</div>
+        <select id="size-11" class="size-selector">
+            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
+            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
+            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+        </select><br>
+        <button class="add-btn" onclick="addToCart('Футболка «?»', 1250, 'size-11')">В корзину</button>
+    </div>
+
+    <div class="product-card">
+        <img src="friends.png" alt="friends" class="product-img">
+        <div class="product-title">Футболка «friends»</div>
+        <div class="product-price">1 250 ₽</div>
+        <select id="size-12" class="size-selector">
+            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
+            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
+            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+        </select><br>
+        <button class="add-btn" onclick="addToCart('Футболка «friends»', 1250, 'size-12')">В корзину</button>
+    </div>
+
+    <div class="product-card">
+        <img src="society.png" alt="society" class="product-img">
+        <div class="product-title">Футболка «society»</div>
+        <div class="product-price">1 250 ₽</div>
+        <select id="size-13" class="size-selector">
+            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
+            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
+            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
+        </select><br>
+        <button class="add-btn" onclick="addToCart('Футболка «society»', 1250, 'size-13')">В корзину</button>
+    </div>
+
+    <div class="cart-panel">
+        <div class="cart-info">
+            Товаров: <span id="cart-count">0</span><br>
+            <b>Итого: <span id="cart-total">0</span> ₽</b>
+        </div>
+        <button class="order-btn" onclick="sendOrder()">Заказать</button>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        function buy(itemName) {
-            tg.sendData(itemName); 
+        let cart = []; 
+
+        function addToCart(name, price, sizeSelectId) {
+            let selectedSize = document.getElementById(sizeSelectId).value;
+            
+            cart.push({
+                name: name,
+                price: price,
+                size: selectedSize
+            });
+
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            let total = 0;
+            cart.forEach(item => total += item.price);
+
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('cart-total').innerText = total;
+        }
+
+        function sendOrder() {
+            if (cart.length === 0) {
+                alert("Ваша корзина пуста!");
+                return;
+            }
+
+            let orderText = "🛒 НОВЫЙ ЗАКАЗ:\n\n";
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                orderText += `${index + 1}. ${item.name}\nРазмер: ${item.size} — ${item.price}₽\n\n`;
+                total += item.price;
+            });
+            
+            orderText += `💰 Итого к оплате: ${total}₽`;
+
+            tg.sendData(orderText);
             tg.close();
         }
     </script>
-
 </body>
 </html>
