@@ -6,6 +6,7 @@
     <title>Deus Ex Machina Shop</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        /* Адаптивный дизайн под тему Telegram */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--tg-theme-bg-color, #ffffff);
@@ -13,11 +14,29 @@
             padding: 15px;
             margin: 0;
             padding-bottom: 100px;
+            position: relative; /* Для правильного позиционирования кнопки поддержки */
         }
         
         h2 {
             text-align: center;
             margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        /* Кнопка поддержки */
+        .support-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--tg-theme-button-color, #2481cc);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .product-card {
@@ -119,11 +138,14 @@
 </head>
 <body>
 
+    <button class="support-btn" onclick="openSupport()">💬 Поддержка</button>
+
     <h2>Каталог</h2>
 
     <div class="product-card">
         <img src="bratva2.png" alt="Братва 2" class="product-img">
         <div class="product-title">Футболка «Братва 2»</div>
+        <div class="product-desc">Только ручная стирка при 30°C</div>
         <div class="product-price">1 250 ₽</div>
         <select id="size-1" class="size-selector">
             <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
@@ -136,6 +158,7 @@
     <div class="product-card">
         <img src="bratva1.png" alt="Братва 1" class="product-img">
         <div class="product-title">Футболка «Братва 1»</div>
+        <div class="product-desc">Только ручная стирка при 30°C</div>
         <div class="product-price">1 250 ₽</div>
         <select id="size-2" class="size-selector">
             <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
@@ -148,6 +171,7 @@
     <div class="product-card">
         <img src="bratva1_5.png" alt="Братва 1,5" class="product-img">
         <div class="product-title">Футболка «Братва 1,5»</div>
+        <div class="product-desc">Только ручная стирка при 30°C</div>
         <div class="product-price">1 250 ₽</div>
         <select id="size-3" class="size-selector">
             <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
@@ -160,6 +184,7 @@
     <div class="product-card">
         <img src="tie.png" alt="Галстук" class="product-img">
         <div class="product-title">Галстук</div>
+        <div class="product-desc">Только ручная стирка при 30°C</div>
         <div class="product-price">1 190 ₽</div>
         <select id="size-4" class="size-selector">
             <option value="Единый">Единый размер</option>
@@ -170,7 +195,7 @@
     <div class="product-card">
         <img src="na_dvoih.png" alt="На двоих" class="product-img">
         <div class="product-title">Футболка «На двоих»</div>
-        <div class="product-desc">Только ручная стирка.</div>
+        <div class="product-desc">Только ручная стирка при 30°C</div>
         <div class="product-price">1 250 ₽</div>
         <select id="size-5" class="size-selector">
             <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
@@ -183,7 +208,7 @@
     <div class="product-card">
         <img src="v_lesu_rodilsya.png" alt="В лесу родился" class="product-img">
         <div class="product-title">Футболка «В лесу родился, пню молился»</div>
-        <div class="product-desc">Только ручная стирка.</div>
+        <div class="product-desc">Только ручная стирка при 30°C</div>
         <div class="product-price">1 250 ₽</div>
         <select id="size-6" class="size-selector">
             <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
@@ -196,7 +221,7 @@
     <div class="product-card">
         <img src="deadass.png" alt="deadass" class="product-img">
         <div class="product-title">Футболка «deadass»</div>
-        <div class="product-desc">Только ручная стирка.</div>
+        <div class="product-desc">Только ручная стирка при 30°C</div>
         <div class="product-price">1 250 ₽</div>
         <select id="size-7" class="size-selector">
             <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
@@ -209,7 +234,7 @@
     <div class="product-card">
         <img src="vermis.png" alt="vermis" class="product-img">
         <div class="product-title">Футболка «vermis»</div>
-        <div class="product-desc">Только ручная стирка.</div>
+        <div class="product-desc">Только ручная стирка при 30°C</div>
         <div class="product-price">1 250 ₽</div>
         <select id="size-8" class="size-selector">
             <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
@@ -222,7 +247,7 @@
     <div class="product-card">
         <img src="watching_over.png" alt="watching over" class="product-img">
         <div class="product-title">Футболка «watching over»</div>
-        <div class="product-desc">Только ручная стирка.</div>
+        <div class="product-desc">Только ручная стирка при 30°C</div>
         <div class="product-price">1 250 ₽</div>
         <select id="size-9" class="size-selector">
             <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
@@ -235,7 +260,7 @@
     <div class="product-card">
         <img src="outside.png" alt="outside" class="product-img">
         <div class="product-title">Футболка «outside»</div>
-        <div class="product-desc">Только ручная стирка.</div>
+        <div class="product-desc">Только ручная стирка при 30°C</div>
         <div class="product-price">1 250 ₽</div>
         <select id="size-10" class="size-selector">
             <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
@@ -248,6 +273,7 @@
     <div class="product-card">
         <img src="question_mark.png" alt="?" class="product-img">
         <div class="product-title">Футболка «?»</div>
+        <div class="product-desc">Только ручная стирка при 30°C</div>
         <div class="product-price">1 250 ₽</div>
         <select id="size-11" class="size-selector">
             <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
@@ -260,6 +286,7 @@
     <div class="product-card">
         <img src="friends.png" alt="friends" class="product-img">
         <div class="product-title">Футболка «friends»</div>
+        <div class="product-desc">Только ручная стирка при 30°C</div>
         <div class="product-price">1 250 ₽</div>
         <select id="size-12" class="size-selector">
             <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
@@ -272,6 +299,7 @@
     <div class="product-card">
         <img src="society.png" alt="society" class="product-img">
         <div class="product-title">Футболка «society»</div>
+        <div class="product-desc">Только ручная стирка при 30°C</div>
         <div class="product-price">1 250 ₽</div>
         <select id="size-13" class="size-selector">
             <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
@@ -294,6 +322,11 @@
         tg.expand();
 
         let cart = []; 
+
+        function openSupport() {
+            // Специальный метод Telegram для нативного открытия ссылок t.me
+            tg.openTelegramLink('https://t.me/demhost');
+        }
 
         function addToCart(name, price, sizeSelectId) {
             let selectedSize = document.getElementById(sizeSelectId).value;
