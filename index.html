@@ -6,7 +6,6 @@
     <title>Deus Ex Machina Shop</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        /* Адаптивный дизайн под тему Telegram */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--tg-theme-bg-color, #ffffff);
@@ -14,307 +13,249 @@
             padding: 15px;
             margin: 0;
             padding-bottom: 100px;
-            position: relative; /* Для правильного позиционирования кнопки поддержки */
         }
         
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            margin-top: 10px;
-        }
+        h2 { text-align: center; margin-bottom: 20px; margin-top: 10px; }
+
+        .hidden { display: none !important; }
 
         /* Кнопка поддержки */
         .support-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: var(--tg-theme-button-color, #2481cc);
-            color: var(--tg-theme-button-text-color, #ffffff);
-            border: none;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: absolute; top: 15px; right: 15px;
+            background-color: var(--tg-theme-secondary-bg-color, #f4f4f5);
+            color: var(--tg-theme-text-color, #000);
+            border: 1px solid #ccc; padding: 8px 12px;
+            border-radius: 8px; font-size: 14px; cursor: pointer;
         }
 
         .product-card {
             background-color: var(--tg-theme-secondary-bg-color, #f4f4f5);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-radius: 12px; padding: 15px; margin-bottom: 20px;
+            text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .product-img {
-            width: 100%;
-            max-width: 250px;
-            height: auto;
-            border-radius: 8px;
-            object-fit: cover;
-            background-color: #e1e1e1;
-        }
-
-        .product-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 10px 0 5px 0;
-        }
-
-        .product-desc {
-            font-size: 12px;
-            opacity: 0.7;
-            margin-bottom: 10px;
-            font-style: italic;
-        }
-
-        .product-price {
-            font-size: 16px;
-            font-weight: bold;
-            color: var(--tg-theme-link-color, #2481cc);
-            margin-bottom: 12px;
-        }
-
+        .product-img { width: 100%; max-width: 250px; border-radius: 8px; }
+        .product-title { font-size: 18px; font-weight: bold; margin: 10px 0 5px 0; }
+        .product-desc { font-size: 12px; opacity: 0.7; margin-bottom: 10px; font-style: italic; }
+        .product-price { font-size: 16px; font-weight: bold; color: var(--tg-theme-link-color, #2481cc); margin-bottom: 12px; }
+        
         .size-selector {
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            background: var(--tg-theme-bg-color, #fff);
-            color: var(--tg-theme-text-color, #000);
-            width: 80%;
-            max-width: 200px;
-            margin-bottom: 12px;
-            font-size: 14px;
+            padding: 8px; border-radius: 6px; border: 1px solid #ccc;
+            background: var(--tg-theme-bg-color, #fff); color: var(--tg-theme-text-color, #000);
+            width: 80%; max-width: 200px; margin-bottom: 12px;
         }
 
-        .add-btn {
+        .btn {
             background-color: var(--tg-theme-button-color, #2481cc);
             color: var(--tg-theme-button-text-color, #ffffff);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            width: 80%;
-            max-width: 200px;
-            transition: opacity 0.2s;
+            border: none; padding: 10px 20px; border-radius: 8px;
+            font-size: 14px; font-weight: 500; cursor: pointer; width: 80%; max-width: 200px;
         }
-        .add-btn:active {
-            opacity: 0.7;
-        }
+        
+        .btn-green { background-color: #31b545; color: white; width: 100%; max-width: none; font-size: 16px; padding: 12px;}
+        .btn-outline { background-color: transparent; border: 1px solid #ccc; color: var(--tg-theme-text-color); margin-bottom: 10px; width: 100%; padding: 12px;}
 
+        /* Нижняя панель */
         .cart-panel {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            position: fixed; bottom: 0; left: 0; right: 0;
             background-color: var(--tg-theme-bg-color, #ffffff);
-            border-top: 1px solid rgba(0,0,0,0.1);
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+            border-top: 1px solid rgba(0,0,0,0.1); padding: 15px;
+            display: flex; justify-content: space-between; align-items: center;
         }
 
-        .cart-info {
-            font-size: 15px;
+        /* Список в корзине */
+        .cart-item {
+            border-bottom: 1px solid #eee; padding: 10px 0;
+            display: flex; justify-content: space-between; align-items: center;
         }
+        .cart-item-remove { color: red; cursor: pointer; font-size: 12px; border: 1px solid red; padding: 4px 8px; border-radius: 4px;}
 
-        .order-btn {
-            background-color: #31b545;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
+        /* Экран оплаты */
+        .payment-box {
+            background-color: var(--tg-theme-secondary-bg-color, #f4f4f5);
+            padding: 20px; border-radius: 12px; text-align: center; margin-top: 20px;
         }
+        .card-number { font-size: 22px; font-weight: bold; letter-spacing: 2px; margin: 15px 0; }
     </style>
 </head>
 <body>
 
-    <button class="support-btn" onclick="openSupport()">💬 Поддержка</button>
+    <div id="catalog-page">
+        <button class="support-btn" onclick="tg.openTelegramLink('https://t.me/demhost')">💬 Поддержка</button>
+        <h2>Каталог</h2>
 
-    <h2>Каталог</h2>
-
-    <div class="product-card">
-        <img src="bratva2.png" alt="Братва 2" class="product-img">
-        <div class="product-title">Футболка «Братва 2»</div>
-        <div class="product-desc">Только ручная стирка при 30°C</div>
-        <div class="product-price">1 250 ₽</div>
-        <select id="size-1" class="size-selector">
-            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
-            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
-            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
-        </select><br>
-        <button class="add-btn" onclick="addToCart('Футболка «Братва 2»', 1250, 'size-1')">В корзину</button>
-    </div>
-
-    <div class="product-card">
-        <img src="bratva1.png" alt="Братва 1" class="product-img">
-        <div class="product-title">Футболка «Братва 1»</div>
-        <div class="product-desc">Только ручная стирка при 30°C</div>
-        <div class="product-price">1 250 ₽</div>
-        <select id="size-2" class="size-selector">
-            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
-            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
-            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
-        </select><br>
-        <button class="add-btn" onclick="addToCart('Футболка «Братва 1»', 1250, 'size-2')">В корзину</button>
-    </div>
-
-    <div class="product-card">
-        <img src="bratva1_5.png" alt="Братва 1,5" class="product-img">
-        <div class="product-title">Футболка «Братва 1,5»</div>
-        <div class="product-desc">Только ручная стирка при 30°C</div>
-        <div class="product-price">1 250 ₽</div>
-        <select id="size-3" class="size-selector">
-            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
-            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
-            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
-        </select><br>
-        <button class="add-btn" onclick="addToCart('Футболка «Братва 1,5»', 1250, 'size-3')">В корзину</button>
-    </div>
-
-    <div class="product-card">
-        <img src="tie.png" alt="Галстук" class="product-img">
-        <div class="product-title">Галстук</div>
-        <div class="product-desc">Только ручная стирка при 30°C</div>
-        <div class="product-price">1 190 ₽</div>
-        <select id="size-4" class="size-selector">
-            <option value="Единый">Единый размер</option>
-        </select><br>
-        <button class="add-btn" onclick="addToCart('Галстук', 1190, 'size-4')">В корзину</button>
-    </div>
-
-    <div class="product-card">
-        <img src="na_dvoih.png" alt="На двоих" class="product-img">
-        <div class="product-title">Футболка «На двоих»</div>
-        <div class="product-desc">Только ручная стирка при 30°C</div>
-        <div class="product-price">1 250 ₽</div>
-        <select id="size-5" class="size-selector">
-            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
-            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
-            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
-        </select><br>
-        <button class="add-btn" onclick="addToCart('Футболка «На двоих»', 1250, 'size-5')">В корзину</button>
-    </div>
-
-    <div class="product-card">
-        <img src="v_lesu_rodilsya.png" alt="В лесу родился" class="product-img">
-        <div class="product-title">Футболка «В лесу родился, пню молился»</div>
-        <div class="product-desc">Только ручная стирка при 30°C</div>
-        <div class="product-price">1 250 ₽</div>
-        <select id="size-6" class="size-selector">
-            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
-            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
-            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
-        </select><br>
-        <button class="add-btn" onclick="addToCart('Футболка «В лесу родился...»', 1250, 'size-6')">В корзину</button>
-    </div>
-
-    <div class="product-card">
-        <img src="deadass.png" alt="deadass" class="product-img">
-        <div class="product-title">Футболка «deadass»</div>
-        <div class="product-desc">Только ручная стирка при 30°C</div>
-        <div class="product-price">1 250 ₽</div>
-        <select id="size-7" class="size-selector">
-            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
-            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
-            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
-        </select><br>
-        <button class="add-btn" onclick="addToCart('Футболка «deadass»', 1250, 'size-7')">В корзину</button>
-    </div>
-
-    <div class="product-card">
-        <img src="vermis.png" alt="vermis" class="product-img">
-        <div class="product-title">Футболка «vermis»</div>
-        <div class="product-desc">Только ручная стирка при 30°C</div>
-        <div class="product-price">1 250 ₽</div>
-        <select id="size-8" class="size-selector">
-            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
-            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
-            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
-        </select><br>
-        <button class="add-btn" onclick="addToCart('Футболка «vermis»', 1250, 'size-8')">В корзину</button>
-    </div>
-
-    <div class="product-card">
-        <img src="watching_over.png" alt="watching over" class="product-img">
-        <div class="product-title">Футболка «watching over»</div>
-        <div class="product-desc">Только ручная стирка при 30°C</div>
-        <div class="product-price">1 250 ₽</div>
-        <select id="size-9" class="size-selector">
-            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
-            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
-            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
-        </select><br>
-        <button class="add-btn" onclick="addToCart('Футболка «watching over»', 1250, 'size-9')">В корзину</button>
-    </div>
-
-    <div class="product-card">
-        <img src="outside.png" alt="outside" class="product-img">
-        <div class="product-title">Футболка «outside»</div>
-        <div class="product-desc">Только ручная стирка при 30°C</div>
-        <div class="product-price">1 250 ₽</div>
-        <select id="size-10" class="size-selector">
-            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
-            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
-            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
-        </select><br>
-        <button class="add-btn" onclick="addToCart('Футболка «outside»', 1250, 'size-10')">В корзину</button>
-    </div>
-
-    <div class="product-card">
-        <img src="question_mark.png" alt="?" class="product-img">
-        <div class="product-title">Футболка «?»</div>
-        <div class="product-desc">Только ручная стирка при 30°C</div>
-        <div class="product-price">1 250 ₽</div>
-        <select id="size-11" class="size-selector">
-            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
-            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
-            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
-        </select><br>
-        <button class="add-btn" onclick="addToCart('Футболка «?»', 1250, 'size-11')">В корзину</button>
-    </div>
-
-    <div class="product-card">
-        <img src="friends.png" alt="friends" class="product-img">
-        <div class="product-title">Футболка «friends»</div>
-        <div class="product-desc">Только ручная стирка при 30°C</div>
-        <div class="product-price">1 250 ₽</div>
-        <select id="size-12" class="size-selector">
-            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
-            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
-            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
-        </select><br>
-        <button class="add-btn" onclick="addToCart('Футболка «friends»', 1250, 'size-12')">В корзину</button>
-    </div>
-
-    <div class="product-card">
-        <img src="society.png" alt="society" class="product-img">
-        <div class="product-title">Футболка «society»</div>
-        <div class="product-desc">Только ручная стирка при 30°C</div>
-        <div class="product-price">1 250 ₽</div>
-        <select id="size-13" class="size-selector">
-            <option value="XS">Размер: XS</option><option value="S">Размер: S</option>
-            <option value="M" selected>Размер: M</option><option value="L">Размер: L</option>
-            <option value="XL">Размер: XL</option><option value="XXL">Размер: XXL</option>
-        </select><br>
-        <button class="add-btn" onclick="addToCart('Футболка «society»', 1250, 'size-13')">В корзину</button>
-    </div>
-
-    <div class="cart-panel">
-        <div class="cart-info">
-            Товаров: <span id="cart-count">0</span><br>
-            <b>Итого: <span id="cart-total">0</span> ₽</b>
+        <div class="product-card">
+            <img src="bratva2.png" alt="Братва 2" class="product-img">
+            <div class="product-title">Футболка «Братва 2»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <div class="product-price">1 250 ₽</div>
+            <select id="size-1" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="M" selected>Размер: M</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «Братва 2»', 1250, 'size-1')">В корзину</button>
         </div>
-        <button class="order-btn" onclick="sendOrder()">Заказать</button>
+
+        <div class="product-card">
+            <img src="bratva1.png" alt="Братва 1" class="product-img">
+            <div class="product-title">Футболка «Братва 1»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <div class="product-price">1 250 ₽</div>
+            <select id="size-2" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="M" selected>Размер: M</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «Братва 1»', 1250, 'size-2')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="bratva1_5.png" alt="Братва 1,5" class="product-img">
+            <div class="product-title">Футболка «Братва 1,5»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <div class="product-price">1 250 ₽</div>
+            <select id="size-3" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="M" selected>Размер: M</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «Братва 1,5»', 1250, 'size-3')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="tie.png" alt="Галстук" class="product-img">
+            <div class="product-title">Галстук</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <div class="product-price">1 190 ₽</div>
+            <select id="size-4" class="size-selector">
+                <option value="Единый">Единый размер</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Галстук', 1190, 'size-4')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="na_dvoih.png" alt="На двоих" class="product-img">
+            <div class="product-title">Футболка «На двоих»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <div class="product-price">1 250 ₽</div>
+            <select id="size-5" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="M" selected>Размер: M</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «На двоих»', 1250, 'size-5')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="v_lesu_rodilsya.png" alt="В лесу родился" class="product-img">
+            <div class="product-title">Футболка «В лесу родился...»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <div class="product-price">1 250 ₽</div>
+            <select id="size-6" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="M" selected>Размер: M</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «В лесу родился...»', 1250, 'size-6')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="deadass.png" alt="deadass" class="product-img">
+            <div class="product-title">Футболка «deadass»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <div class="product-price">1 250 ₽</div>
+            <select id="size-7" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="M" selected>Размер: M</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «deadass»', 1250, 'size-7')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="vermis.png" alt="vermis" class="product-img">
+            <div class="product-title">Футболка «vermis»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <div class="product-price">1 250 ₽</div>
+            <select id="size-8" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="M" selected>Размер: M</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «vermis»', 1250, 'size-8')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="watching_over.png" alt="watching over" class="product-img">
+            <div class="product-title">Футболка «watching over»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <div class="product-price">1 250 ₽</div>
+            <select id="size-9" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="M" selected>Размер: M</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «watching over»', 1250, 'size-9')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="outside.png" alt="outside" class="product-img">
+            <div class="product-title">Футболка «outside»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <div class="product-price">1 250 ₽</div>
+            <select id="size-10" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="M" selected>Размер: M</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «outside»', 1250, 'size-10')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="question_mark.png" alt="?" class="product-img">
+            <div class="product-title">Футболка «?»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <div class="product-price">1 250 ₽</div>
+            <select id="size-11" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="M" selected>Размер: M</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «?»', 1250, 'size-11')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="friends.png" alt="friends" class="product-img">
+            <div class="product-title">Футболка «friends»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <div class="product-price">1 250 ₽</div>
+            <select id="size-12" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="M" selected>Размер: M</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «friends»', 1250, 'size-12')">В корзину</button>
+        </div>
+
+        <div class="product-card">
+            <img src="society.png" alt="society" class="product-img">
+            <div class="product-title">Футболка «society»</div>
+            <div class="product-desc">Только ручная стирка при 30°C</div>
+            <div class="product-price">1 250 ₽</div>
+            <select id="size-13" class="size-selector">
+                <option value="XS">Размер: XS</option><option value="M" selected>Размер: M</option><option value="XXL">Размер: XXL</option>
+            </select><br>
+            <button class="btn" onclick="addToCart('Футболка «society»', 1250, 'size-13')">В корзину</button>
+        </div>
+
+        <div class="cart-panel">
+            <div>Товаров: <span id="cart-count">0</span><br><b><span id="cart-total">0</span> ₽</b></div>
+            <button class="btn-green" style="width: auto; padding: 12px 20px;" onclick="openCart()">В корзину 🛒</button>
+        </div>
+    </div>
+
+    <div id="cart-page" class="hidden">
+        <h2>Ваш заказ</h2>
+        <div id="cart-items-list" style="margin-bottom: 20px;">
+            </div>
+        <h3 style="text-align: right;">Итого: <span id="cart-final-total">0</span> ₽</h3>
+        
+        <button class="btn-outline" onclick="closeCart()">← Назад к покупкам</button>
+        <button class="btn-green" onclick="openPayment()">Оплатить заказ</button>
+    </div>
+
+    <div id="payment-page" class="hidden">
+        <h2>Оплата</h2>
+        <p style="text-align: center;">Переведите <b><span id="pay-total">0</span> ₽</b> по реквизитам ниже.</p>
+        
+        <div class="payment-box">
+            <p>Банк: <b>Альфа-Банк</b></p>
+            <div class="card-number" id="my-card">2200 1523 8161 6112</div> 
+            <button class="btn" onclick="copyCard()">📋 Скопировать</button>
+        </div>
+
+        <br><br>
+        <button class="btn-green" onclick="finishOrder()">✅ Я оплатил</button>
+        <button class="btn-outline" onclick="backToCart()" style="margin-top: 10px;">← Назад</button>
     </div>
 
     <script>
@@ -323,49 +264,87 @@
 
         let cart = []; 
 
-        function openSupport() {
-            // Специальный метод Telegram для нативного открытия ссылок t.me
-            tg.openTelegramLink('https://t.me/demhost');
-        }
-
         function addToCart(name, price, sizeSelectId) {
             let selectedSize = document.getElementById(sizeSelectId).value;
-            
-            cart.push({
-                name: name,
-                price: price,
-                size: selectedSize
-            });
-
+            cart.push({ name: name, price: price, size: selectedSize });
             updateCartUI();
+            tg.showAlert(`Добавлено: ${name} (${selectedSize})`);
         }
 
         function updateCartUI() {
-            let total = 0;
-            cart.forEach(item => total += item.price);
-
+            let total = cart.reduce((sum, item) => sum + item.price, 0);
             document.getElementById('cart-count').innerText = cart.length;
             document.getElementById('cart-total').innerText = total;
+            document.getElementById('cart-final-total').innerText = total;
+            document.getElementById('pay-total').innerText = total;
         }
 
-        function sendOrder() {
-            if (cart.length === 0) {
-                alert("Ваша корзина пуста!");
-                return;
-            }
+        function removeCartItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+            renderCartItems();
+            if(cart.length === 0) closeCart();
+        }
 
-            let orderText = "🛒 НОВЫЙ ЗАКАЗ:\n\n";
-            let total = 0;
-            
+        // Переключение экранов
+        function openCart() {
+            if (cart.length === 0) return tg.showAlert("Сначала добавьте товары в корзину!");
+            document.getElementById('catalog-page').classList.add('hidden');
+            document.getElementById('cart-page').classList.remove('hidden');
+            renderCartItems();
+        }
+
+        function closeCart() {
+            document.getElementById('cart-page').classList.add('hidden');
+            document.getElementById('catalog-page').classList.remove('hidden');
+        }
+
+        function openPayment() {
+            document.getElementById('cart-page').classList.add('hidden');
+            document.getElementById('payment-page').classList.remove('hidden');
+        }
+
+        function backToCart() {
+            document.getElementById('payment-page').classList.add('hidden');
+            document.getElementById('cart-page').classList.remove('hidden');
+        }
+
+        function renderCartItems() {
+            let html = '';
             cart.forEach((item, index) => {
-                orderText += `${index + 1}. ${item.name}\nРазмер: ${item.size} — ${item.price}₽\n\n`;
+                html += `<div class="cart-item">
+                            <div><b>${item.name}</b><br>Размер: ${item.size} — ${item.price} ₽</div>
+                            <div class="cart-item-remove" onclick="removeCartItem(${index})">✕ Убрать</div>
+                         </div>`;
+            });
+            document.getElementById('cart-items-list').innerHTML = html;
+        }
+
+        function copyCard() {
+            let cardNumber = document.getElementById('my-card').innerText;
+            navigator.clipboard.writeText(cardNumber).then(() => {
+                tg.showAlert("Номер карты скопирован!");
+            }).catch(err => {
+                tg.showAlert("Ошибка копирования. Скопируйте номер вручную.");
+            });
+        }
+
+        function finishOrder() {
+            // Уведомляем клиента перед закрытием
+            tg.showAlert("Отлично! Сейчас бот пришлет вам ссылку на менеджера. Обязательно отправьте ему скриншот перевода!");
+            
+            let orderText = "🛒 НОВЫЙ ЗАКАЗ И ОПЛАТА:\n\n";
+            let total = 0;
+            cart.forEach((item, index) => {
+                orderText += `${index + 1}. ${item.name} (${item.size}) — ${item.price}₽\n`;
                 total += item.price;
             });
-            
-            orderText += `💰 Итого к оплате: ${total}₽`;
+            orderText += `\n💰 Итого к оплате: ${total}₽\n✅ Клиент нажал «Я оплатил»`;
 
-            tg.sendData(orderText);
-            tg.close();
+            // Отправляем данные боту и закрываем
+            setTimeout(() => {
+                tg.sendData(orderText);
+            }, 1000); // Небольшая задержка, чтобы пользователь успел прочитать alert
         }
     </script>
 </body>
