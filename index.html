@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Глобальные настройки стилей */
         :root {
             --bg-color: #000000;
             --text-color: #FFFFFF;
@@ -29,7 +28,8 @@
             padding-bottom: 130px; 
             overflow-x: hidden;
             
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3P%3Cfilter id='noiseFilter'%3P%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3P%3C/filter%3P%3Crect width='100%' height='100%' filter='url(%23noiseFilter)'/%3P%3C/svg%3P");
+            /* Исправлен код шума на фоне */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
             opacity: 0.98;
         }
 
@@ -274,7 +274,7 @@
 <body>
 
     <div id="catalog-page">
-        <button class="support-btn" onclick="tg.openTelegramLink('https://t.me/demhost')">ПОДДЕРЖКА</button>
+        <button class="support-btn" onclick="openSupport()">ПОДДЕРЖКА</button>
         <h2>Каталог</h2>
 
         <div class="product-card">
@@ -443,4 +443,130 @@
         
         <div class="payment-box">
             <p style="font-family: var(--font-sans); font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Банк</p>
-            <p style="margin-top: 0; font-weight: 700; font-size: 16px;
+            <p style="margin-top: 0; font-weight: 700; font-size: 16px;">Альфа-Банк</p>
+            <div class="card-number" id="my-card">2200 1523 8161 6112</div> 
+            <button class="btn" style="font-size: 14px; padding: 10px; width: auto; max-width: none;" onclick="copyCard()">📋 Скопировать</button>
+        </div>
+
+        <br><br>
+        <button class="btn-green" onclick="finishOrder()">✅ Я оплатил</button>
+        <button class="btn-outline" onclick="backToCart()" style="margin-top: 10px;">← Назад</button>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+        
+        let cart = []; 
+
+        function openSupport() {
+            try {
+                tg.openTelegramLink('https://t.me/demhost');
+            } catch (e) {
+                window.location.href = 'https://t.me/demhost';
+            }
+        }
+
+        function addToCart(name, price, sizeSelectId) {
+            let selectedSize = document.getElementById(sizeSelectId).value;
+            cart.push({ name: name, price: price, size: selectedSize });
+            updateCartUI();
+            
+            try {
+                tg.showAlert(`ДОБАВЛЕНО: ${name} (${selectedSize})`);
+            } catch (e) {
+                alert(`ДОБАВЛЕНО: ${name} (${selectedSize})`);
+            }
+        }
+
+        function updateCartUI() {
+            let total = cart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('cart-total').innerText = total;
+            document.getElementById('cart-final-total').innerText = total;
+            document.getElementById('pay-total').innerText = total;
+        }
+
+        function removeCartItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+            renderCartItems();
+            if(cart.length === 0) closeCart();
+        }
+
+        function openCart() {
+            if (cart.length === 0) {
+                try {
+                    tg.showAlert("Корзина пуста!");
+                } catch (e) {
+                    alert("Корзина пуста!");
+                }
+                return;
+            }
+            document.getElementById('catalog-page').classList.add('hidden');
+            document.getElementById('cart-page').classList.remove('hidden');
+            window.scrollTo(0, 0);
+            renderCartItems();
+        }
+
+        function closeCart() {
+            document.getElementById('cart-page').classList.add('hidden');
+            document.getElementById('catalog-page').classList.remove('hidden');
+        }
+
+        function openPayment() {
+            document.getElementById('cart-page').classList.add('hidden');
+            document.getElementById('payment-page').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function backToCart() {
+            document.getElementById('payment-page').classList.add('hidden');
+            document.getElementById('cart-page').classList.remove('hidden');
+        }
+
+        function renderCartItems() {
+            let html = '';
+            cart.forEach((item, index) => {
+                html += `<div class="cart-item">
+                            <div class="cart-item-info"><b style="font-family:var(--font-serif); text-transform:uppercase;">${item.name}</b><br>Размер: ${item.size}</div>
+                            <div class="cart-item-price">${item.price} ₽</div>
+                            <div class="cart-item-remove" onclick="removeCartItem(${index})">✕ Убрать</div>
+                         </div>`;
+            });
+            document.getElementById('cart-items-list').innerHTML = html;
+        }
+
+        function copyCard() {
+            let cardNumber = document.getElementById('my-card').innerText;
+            let pureNumber = cardNumber.replace(/\s/g, '');
+            navigator.clipboard.writeText(pureNumber).then(() => {
+                try { tg.showAlert("Номер карты скопирован!"); } catch(e) { alert("Номер карты скопирован!"); }
+            }).catch(err => {
+                try { tg.showAlert("Скопируйте номер вручную."); } catch(e) { alert("Скопируйте номер вручную."); }
+            });
+        }
+
+        function finishOrder() {
+            try {
+                tg.showAlert("ОТЛИЧНО! Пожалуйста, отправьте скриншот оплаты нашему менеджеру.");
+            } catch (e) {
+                alert("ОТЛИЧНО! Пожалуйста, отправьте скриншот оплаты нашему менеджеру.");
+            }
+            
+            let orderText = "🛒 НОВЫЙ ЗАКАЗ И ОПЛАТА:\n\n";
+            let total = 0;
+            cart.forEach((item, index) => {
+                orderText += `${index + 1}. ${item.name} (${item.size}) — ${item.price}₽\n`;
+                total += item.price;
+            });
+            orderText += `\n💰 ИТОГО К ОПЛАТЕ: ${total}₽\n✅ Клиент нажал «Я оплатил»`;
+
+            setTimeout(() => {
+                tg.sendData(orderText);
+            }, 1500); 
+        }
+    </script>
+</body>
+</html>
+ 
